@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<config>
+    <global>
+        <install>
+            <date><![CDATA[{{ install_date }}]]></date>
+        </install>
+        <crypt>
+            <key><![CDATA[{{ encryption_key }}]]></key>
+        </crypt>
+        <disable_local_modules>false</disable_local_modules>
+        <resources>
+            <db>
+                <table_prefix><![CDATA[{{ table_prefix }}]]></table_prefix>
+            </db>
+            <default_setup>
+                <connection>
+                    <host><![CDATA[{{ database_host }}]]></host>
+                    <username><![CDATA[{{ database_user }}]]></username>
+                    <password><![CDATA[{{ database_password }}]]></password>
+                    <dbname><![CDATA[{{ database_name }}]]></dbname>
+                    <initStatements><![CDATA[SET NAMES utf8]]></initStatements>
+                    <model><![CDATA[mysql4]]></model>
+                    <type><![CDATA[pdo_mysql]]></type>
+                    <pdoType><![CDATA[]]></pdoType>
+                    <active>1</active>
+                </connection>
+            </default_setup>
+        </resources>
+        <session_save><![CDATA[{{ session_save|default('db') }}]]></session_save>
+{% if redis_object_host and redis_object_port %}
+        <cache>
+            <backend>Mage_Cache_Backend_Redis</backend>
+            <backend_options>
+                <server>{{ redis_object_host }}</server>                 <!-- or absolute path to unix socket -->
+                <port>{{ redis_object_port }}</port>
+                <persistent></persistent>               <!-- Specify a unique string like "cache-db0" to enable persistent connections. -->
+                <database>0</database>
+                <password></password>
+                <force_standalone>0</force_standalone>  <!-- 0 for phpredis, 1 for standalone PHP -->
+                <connect_retries>5</connect_retries>    <!-- Reduces errors due to random connection failures -->
+                <read_timeout>20</read_timeout>         <!-- Set read timeout duration -->
+                <automatic_cleaning_factor>0</automatic_cleaning_factor> <!-- Disabled by default -->
+                <compress_data>1</compress_data>        <!-- 0-9 for compression level, recommended: 0 or 1 -->
+                <compress_tags>1</compress_tags>        <!-- 0-9 for compression level, recommended: 0 or 1 -->
+                <compress_threshold>20480</compress_threshold> <!-- Strings below this size will not be compressed -->
+                <compression_lib>gzip</compression_lib> <!-- Supports gzip, lzf and snappy -->
+            </backend_options>
+        </cache>
+{% endif %}
+{% if redis_session_host and redis_session_port %}
+        <redis_session>                                          <!-- All options seen here are the defaults -->
+            <host>{{ redis_session_host }}</host>                                  <!-- Specify an absolute path if using a unix socket -->
+            <port>{{ redis_session_port }}</port>
+            <password></password>                                <!-- Specify if your Redis server requires authentication -->
+            <timeout>2.5
+            </timeout>                               <!-- This is the Redis connection timeout, not the locking timeout -->
+            <persistent></persistent>                            <!-- Specify unique string to enable persistent connections. E.g.: sess-db0; bugs with phpredis and php-fpm are known: https://github.com/nicolasff/phpredis/issues/70 -->
+            <db>0
+            </db>                                           <!-- Redis database number; protection from accidental loss is improved by using a unique DB number for sessions -->
+            <compression_threshold>2048
+            </compression_threshold>  <!-- Set to 0 to disable compression (recommended when suhosin.session.encrypt=on); known bug with strings over 64k: https://github.com/colinmollenhour/Cm_Cache_Backend_Redis/issues/18 -->
+            <compression_lib>gzip</compression_lib>              <!-- gzip, lzf, lz4 or snappy -->
+            <log_level>1
+            </log_level>                             <!-- 0 (emergency: system is unusable), 4 (warning; additional information, recommended), 5 (notice: normal but significant condition), 6 (info: informational messages), 7 (debug: the most information for development/testing) -->
+            <max_concurrency>6
+            </max_concurrency>                 <!-- maximum number of processes that can wait for a lock on one session; for large production clusters, set this to at least 10% of the number of PHP processes -->
+            <break_after_frontend>5
+            </break_after_frontend>       <!-- seconds to wait for a session lock in the frontend; not as critical as admin -->
+            <break_after_adminhtml>30</break_after_adminhtml>
+            <first_lifetime>600
+            </first_lifetime>                 <!-- Lifetime of session for non-bots on the first write. 0 to disable -->
+            <bot_first_lifetime>60
+            </bot_first_lifetime>          <!-- Lifetime of session for bots on the first write. 0 to disable -->
+            <bot_lifetime>7200
+            </bot_lifetime>                    <!-- Lifetime of session for bots on subsequent writes. 0 to disable -->
+            <disable_locking>0</disable_locking>                 <!-- Disable session locking entirely. -->
+        </redis_session>
+{% endif %}
+{% if redis_fpc_host and redis_fpc_port %}
+        <full_page_cache>
+            <backend>Mage_Cache_Backend_Redis</backend>
+            <backend_options>
+                <server>{{ redis_fpc_host }}</server> <!-- or absolute path to unix socket -->
+                <port>{{ redis_fpc_port }}</port>
+                <persistent></persistent> <!-- Specify a unique string like "cache-db0" to enable persistent connections. -->
+                <database>0</database> <!-- Separate database 1 to keep FPC separately -->
+                <password></password>
+                <force_standalone>0</force_standalone>  <!-- 0 for phpredis, 1 for standalone PHP -->
+                <connect_retries>1</connect_retries>    <!-- Reduces errors due to random connection failures -->
+                <lifetimelimit>57600</lifetimelimit>    <!-- 16 hours of lifetime for cache record -->
+                <compress_data>0
+                </compress_data>        <!-- DISABLE compression for EE FPC since it already uses compression -->
+            </backend_options>
+        </full_page_cache>
+{% endif %}
+    </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <frontName><![CDATA[{{ admin_frontname }}]]></frontName>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <frontend>
+        <events>
+            <controller_action_predispatch>
+                <observers><log><type>disabled</type></log></observers>
+            </controller_action_predispatch>
+            <controller_action_postdispatch>
+                <observers><log><type>disabled</type></log></observers>
+            </controller_action_postdispatch>
+            <sales_quote_save_after>
+                <observers><log><type>disabled</type></log></observers>
+            </sales_quote_save_after>
+            <checkout_quote_destroy>
+                <observers><log><type>disabled</type></log></observers>
+            </checkout_quote_destroy>
+        </events>
+    </frontend>
+    <default>
+{% if devops_app_setup_repo_url and devops_environment %}
+        <projectsync>
+            <pull>
+                <devops>
+                    <app_setup_repo_url>{{ devops_app_setup_repo_url }}</app_setup_repo_url>
+                    <environment>{{ devops_environment }}</environment>
+                </devops>
+            </pull>
+        </projectsync>
+{% endif %}
+    </default>
+</config>
