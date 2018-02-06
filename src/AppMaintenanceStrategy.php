@@ -13,6 +13,21 @@ use Psr\Log\LoggerInterface;
 class AppMaintenanceStrategy implements MaintenanceStrategyInterface, LoggerAwareInterface
 {
     /**
+     * @var ApplicationConfig
+     */
+    private $applicationConfig;
+
+    /**
+     * AppMaintenanceStrategy constructor.
+     *
+     * @param ApplicationConfig $applicationConfig
+     */
+    public function __construct(ApplicationConfig $applicationConfig)
+    {
+        $this->applicationConfig = $applicationConfig;
+    }
+
+    /**
      * Sets a logger instance on the object.
      *
      * @param LoggerInterface $logger
@@ -25,44 +40,41 @@ class AppMaintenanceStrategy implements MaintenanceStrategyInterface, LoggerAwar
     }
 
     /**
-     * @param ApplicationConfig $application
      * @param string|null       $branch
      */
-    public function enable(ApplicationConfig $application, string $branch = null): void
+    public function enable(string $branch = null): void
     {
         // @todo Write these files to each server in parallel with amphp
-        foreach ($this->getServers($application) as $serverName => $server) {
-            $filesystem = $this->getServerFilesystem($application, $serverName, $server);
+        foreach ($this->getServers() as $serverName => $server) {
+            $filesystem = $this->getServerFilesystem($serverName, $server);
             $filesystem->put('maintenance.flag', '');
         }
     }
 
     /**
-     * @param ApplicationConfig $application
      * @param string|null       $branch
      */
-    public function disable(ApplicationConfig $application, string $branch = null): void
+    public function disable(string $branch = null): void
     {
         // @todo Delete these files on each server in parallel with amphp
-        foreach ($this->getServers($application) as $serverName => $server) {
-            $filesystem = $this->getServerFilesystem($application, $serverName, $server);
+        foreach ($this->getServers() as $serverName => $server) {
+            $filesystem = $this->getServerFilesystem($serverName, $server);
             $filesystem->delete('maintenance.flag');
         }
     }
 
     /**
-     * @param ApplicationConfig $application
      * @param string|null       $branch
      *
      * @return bool
      */
-    public function isEnabled(ApplicationConfig $application, string $branch = null): bool
+    public function isEnabled(string $branch = null): bool
     {
-        $servers = $this->getServers($application);
+        $servers = $this->getServers();
         $serversInMaintenance = [];
         // @todo Run these checks in parallel with amphp
         foreach ($servers as $serverName => $server) {
-            $filesystem = $this->getServerFilesystem($application, $serverName, $server);
+            $filesystem = $this->getServerFilesystem($serverName, $server);
             if ($filesystem->has('maintenance.flag')) {
                 $serversInMaintenance[$serverName] = true;
             }
@@ -84,11 +96,11 @@ class AppMaintenanceStrategy implements MaintenanceStrategyInterface, LoggerAwar
     }
 
     /**
-     * @param ApplicationConfig $application
+     * @return array
      */
-    protected function getServers(ApplicationConfig $application): array
+    protected function getServers(): array
     {
-        $servers = $application->getServers();
+        $servers = $this->applicationConfig->getServers();
         if (empty($servers)) {
             $servers = [
                 'localhost' => [
@@ -101,14 +113,13 @@ class AppMaintenanceStrategy implements MaintenanceStrategyInterface, LoggerAwar
     }
 
     /**
-     * @param ApplicationConfig $application
      * @param string            $serverName
      * @param array             $server
      *
      * @return Filesystem
      * @throws Exception\RuntimeException if server configuration is invalid
      */
-    protected function getServerFilesystem(ApplicationConfig $application, string $serverName, array $server): Filesystem
+    protected function getServerFilesystem(string $serverName, array $server): Filesystem
     {
         if (empty($server['host'])) {
             throw new Exception\RuntimeException(sprintf(
@@ -118,13 +129,13 @@ class AppMaintenanceStrategy implements MaintenanceStrategyInterface, LoggerAwar
         }
 
         if (in_array($server['host'], ['127.0.0.1', 'localhost'])) {
-            $adapter = new Local($application->getCodePath());
+            $adapter = new Local($this->applicationConfig->getCodePath());
         } else {
             $adapter = new SftpAdapter(
                 array_merge(
-                    $application->getSshDefaults(),
+                    $this->applicationConfig->getSshDefaults(),
                     $server,
-                    ['root' => $application->getCodePath()]
+                    ['root' => $this->applicationConfig->getCodePath()]
                 )
             );
         }
