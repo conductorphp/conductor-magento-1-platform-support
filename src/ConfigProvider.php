@@ -1,6 +1,6 @@
 <?php
 
-namespace DevopsToolMagento1PlatformSupport;
+namespace ConductorMagento1PlatformSupport;
 
 use Symfony\Component\Yaml\Yaml;
 
