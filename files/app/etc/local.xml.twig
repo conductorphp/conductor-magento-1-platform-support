@@ -120,13 +120,13 @@
         </events>
     </frontend>
     <default>
-{% if conductor_app_setup_repo_url and conductor_environment %}
+{% if devops_app_setup_repo_url and devops_environment %}
         <projectsync>
             <pull>
-                <conductor>
-                    <app_setup_repo_url>{{ conductor_app_setup_repo_url }}</app_setup_repo_url>
-                    <environment>{{ conductor_environment }}</environment>
-                </conductor>
+                <devops>
+                    <app_setup_repo_url>{{ devops_app_setup_repo_url }}</app_setup_repo_url>
+                    <environment>{{ devops_environment }}</environment>
+                </devops>
             </pull>
         </projectsync>
 {% endif %}
