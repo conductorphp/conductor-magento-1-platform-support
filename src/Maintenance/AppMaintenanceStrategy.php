@@ -45,10 +45,12 @@ class AppMaintenanceStrategy implements MaintenanceStrategyInterface, LoggerAwar
     public function enable(string $branch = null): void
     {
         // @todo Write these files to each server in parallel with amphp
-        foreach ($this->getServers() as $serverName => $server) {
-            $filesystem = $this->getServerFilesystem($serverName, $server);
-            $filesystem->put('maintenance.flag', '');
-        }
+        // TODO: Implement enable() method.
+        throw new \LogicException(__METHOD__ . ' not yet implemented.');
+//        foreach ($this->getServers() as $serverName => $server) {
+//            $filesystem = $this->getServerFilesystem($serverName, $server);
+//            $filesystem->put('maintenance.flag', '');
+//        }
     }
 
     /**
@@ -57,10 +59,12 @@ class AppMaintenanceStrategy implements MaintenanceStrategyInterface, LoggerAwar
     public function disable(string $branch = null): void
     {
         // @todo Delete these files on each server in parallel with amphp
-        foreach ($this->getServers() as $serverName => $server) {
-            $filesystem = $this->getServerFilesystem($serverName, $server);
-            $filesystem->delete('maintenance.flag');
-        }
+        // TODO: Implement enable() method.
+        throw new \LogicException(__METHOD__ . ' not yet implemented.');
+//        foreach ($this->getServers() as $serverName => $server) {
+//            $filesystem = $this->getServerFilesystem($serverName, $server);
+//            $filesystem->delete('maintenance.flag');
+//        }
     }
 
     /**
@@ -70,29 +74,33 @@ class AppMaintenanceStrategy implements MaintenanceStrategyInterface, LoggerAwar
      */
     public function isEnabled(string $branch = null): bool
     {
-        $servers = $this->getServers();
-        $serversInMaintenance = [];
-        // @todo Run these checks in parallel with amphp
-        foreach ($servers as $serverName => $server) {
-            $filesystem = $this->getServerFilesystem($serverName, $server);
-            if ($filesystem->has('maintenance.flag')) {
-                $serversInMaintenance[$serverName] = true;
-            }
-        }
-
-        if (!$serversInMaintenance) {
-            return false;
-        }
-
-        if (count($serversInMaintenance) == count($servers)) {
-            return true;
-        }
-
-        $serversNotInMaintenance = array_diff_key($servers, $serversInMaintenance);
-        throw new Exception\RuntimeException(sprintf(
-            'Maintenance mode enabled, but servers "%s" are missing maintenance flag.',
-            implode(', ', array_keys($serversNotInMaintenance))
-        ));
+        // TODO: Implement enable() method.
+        throw new \LogicException(__METHOD__ . ' not yet implemented.');
+//
+//        $servers = $this->getServers();
+//        $serversInMaintenance = [];
+//
+//        // @todo Run these checks in parallel with amphp
+//        foreach ($servers as $serverName => $server) {
+//            $filesystem = $this->getServerFilesystem($serverName, $server);
+//            if ($filesystem->has('maintenance.flag')) {
+//                $serversInMaintenance[$serverName] = true;
+//            }
+//        }
+//
+//        if (!$serversInMaintenance) {
+//            return false;
+//        }
+//
+//        if (count($serversInMaintenance) == count($servers)) {
+//            return true;
+//        }
+//
+//        $serversNotInMaintenance = array_diff_key($servers, $serversInMaintenance);
+//        throw new Exception\RuntimeException(sprintf(
+//            'Maintenance mode enabled, but servers "%s" are missing maintenance flag.',
+//            implode(', ', array_keys($serversNotInMaintenance))
+//        ));
     }
 
     /**
