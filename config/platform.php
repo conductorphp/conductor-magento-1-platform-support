@@ -502,7 +502,7 @@ return [
         ],
         'gomage/feed'                           => [
             'gomage_feed_entity'
-        ]
+        ],
     ],
     'template_vars'         => [
         'admin_frontname' => 'admin',
