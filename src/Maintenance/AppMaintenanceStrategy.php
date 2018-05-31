@@ -1,9 +1,9 @@
 <?php
 
-namespace ConductorMagento1PlatformSupport;
+namespace ConductorMagento1PlatformSupport\Maintenance;
 
-use ConductorAppOrchestration\ApplicationConfig;
-use ConductorAppOrchestration\MaintenanceStrategy\MaintenanceStrategyInterface;
+use ConductorAppOrchestration\Config\ApplicationConfig;
+use ConductorAppOrchestration\Maintenance\MaintenanceStrategyInterface;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use League\Flysystem\Sftp\SftpAdapter;

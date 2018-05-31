@@ -1,6 +1,6 @@
 <?php
 
-namespace ConductorMagento1PlatformSupport;
+namespace ConductorMagento1PlatformSupport\Maintenance;
 
 use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
@@ -26,7 +26,7 @@ class AppMaintenanceStrategyFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $applicationConfig = $container->get('ConductorAppOrchestration\ApplicationConfig');
+        $applicationConfig = $container->get(\ConductorAppOrchestration\Config\ApplicationConfig::class);
         return new AppMaintenanceStrategy($applicationConfig);
     }
 
