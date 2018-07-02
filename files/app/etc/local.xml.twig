@@ -15,7 +15,7 @@
             </db>
             <default_setup>
                 <connection>
-                    <host><![CDATA[{{ database_host }}]]></host>
+                    <host><![CDATA[{{ database_host|default(localhost) }}]]></host>
                     <username><![CDATA[{{ database_user }}]]></username>
                     <password><![CDATA[{{ database_password }}]]></password>
                     <dbname><![CDATA[{{ database_name }}]]></dbname>
@@ -99,7 +99,7 @@
         <routers>
             <adminhtml>
                 <args>
-                    <frontName><![CDATA[{{ admin_frontname }}]]></frontName>
+                    <frontName><![CDATA[{{ admin_frontname|default('admin') }}]]></frontName>
                 </args>
             </adminhtml>
         </routers>
@@ -121,16 +121,6 @@
         </events>
     </frontend>
     <default>
-{% if devops_app_setup_repo_url and devops_environment %}
-        <projectsync>
-            <pull>
-                <devops>
-                    <app_setup_repo_url>{{ devops_app_setup_repo_url }}</app_setup_repo_url>
-                    <environment>{{ devops_environment }}</environment>
-                </devops>
-            </pull>
-        </projectsync>
-{% endif %}
     </default>
 </config>
 {% endautoescape %}
