@@ -1,6 +1,12 @@
 Conductor: Magento 1 Platform Support Changelog
 ==============================================
 
+# 0.9.1
+- Updated to require conductor/application-orchestration:~0.9.3 instead of dev-master
+
+# 0.9.0
+- Tagged for initial consistency with other modules
+
 # 0.2.0 (Unreleased)
 - Renamed to Conductor
 - Updated PHP version requirement to 7.1
