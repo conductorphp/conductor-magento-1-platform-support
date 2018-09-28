@@ -1,6 +1,9 @@
 Conductor: Magento 1 Platform Support Changelog
 ==============================================
 
+# 0.9.2
+- Fixed license per https://spdx.org/licenses/
+
 # 0.9.1
 - Updated to require conductor/application-orchestration:~0.9.3 instead of dev-master
 
