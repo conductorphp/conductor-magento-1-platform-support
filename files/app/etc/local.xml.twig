@@ -74,7 +74,7 @@
             </bot_first_lifetime>          <!-- Lifetime of session for bots on the first write. 0 to disable -->
             <bot_lifetime>7200
             </bot_lifetime>                    <!-- Lifetime of session for bots on subsequent writes. 0 to disable -->
-            <disable_locking>0</disable_locking>                 <!-- Disable session locking entirely. -->
+            <disable_locking>{{ redis_session_disable_locking|default(0) }}</disable_locking>                 <!-- Disable session locking entirely. -->
         </redis_session>
 {% endif %}
 {% if redis_fpc_host and redis_fpc_port %}

@@ -1,6 +1,9 @@
 Conductor: Magento 1 Platform Support Changelog
 ==============================================
 
+# 0.9.4
+- Added ability to set redis session disable_locking setting in app/etc/local.xml
+
 # 0.9.3
 - Removed salesrule_coupon from default snapshot database table excludes list
 
