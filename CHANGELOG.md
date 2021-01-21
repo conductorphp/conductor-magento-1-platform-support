@@ -8,7 +8,7 @@ Conductor: Magento 1 Platform Support Changelog
 - Fixed license per https://spdx.org/licenses/
 
 # 0.9.1
-- Updated to require conductor/application-orchestration:~0.9.3 instead of dev-master
+- Updated to require conductor/application-orchestration:^1.0.0 instead of dev-master
 
 # 0.9.0
 - Tagged for initial consistency with other modules
