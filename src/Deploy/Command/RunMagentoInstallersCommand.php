@@ -4,6 +4,7 @@ namespace ConductorMagento1PlatformSupport\Deploy\Command;
 
 use ConductorAppOrchestration\Deploy\ApplicationCodeDeployer;
 use ConductorAppOrchestration\Deploy\ApplicationCodeDeployerAwareInterface;
+use ConductorAppOrchestration\Deploy\Command\DeployCommandInterface;
 use ConductorAppOrchestration\Exception;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
