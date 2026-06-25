@@ -42,7 +42,7 @@ class AppMaintenanceStrategy implements MaintenanceStrategyInterface, LoggerAwar
     /**
      * @param string|null       $branch
      */
-    public function enable(string $branch = null): void
+    public function enable(?string $branch = null): void
     {
         // @todo Write these files to each server in parallel with amphp
         // TODO: Implement enable() method.
@@ -56,7 +56,7 @@ class AppMaintenanceStrategy implements MaintenanceStrategyInterface, LoggerAwar
     /**
      * @param string|null       $branch
      */
-    public function disable(string $branch = null): void
+    public function disable(?string $branch = null): void
     {
         // @todo Delete these files on each server in parallel with amphp
         // TODO: Implement enable() method.
@@ -72,7 +72,7 @@ class AppMaintenanceStrategy implements MaintenanceStrategyInterface, LoggerAwar
      *
      * @return bool
      */
-    public function isEnabled(string $branch = null): bool
+    public function isEnabled(?string $branch = null): bool
     {
         // TODO: Implement enable() method.
         throw new \LogicException(__METHOD__ . ' not yet implemented.');

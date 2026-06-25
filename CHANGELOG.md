@@ -1,25 +1,16 @@
-Conductor: Magento 1 Platform Support Changelog
-==============================================
+[1.0.1](https://github.com/conductorphp/conductor-magento-1-platform-support/compare/1.0.0...1.0.1) (2026-06-25)
 
-# 0.9.3
-- Removed salesrule_coupon from default snapshot database table excludes list
+### Bug Fixes
+* 8.2-8.5 support ([df6c9a1](https://github.com/conductorphp/conductor-magento-1-platform-support/commit/df6c9a13bec95ee4e933336f5365f903a72aa1dd))
 
-# 0.9.2
-- Fixed license per https://spdx.org/licenses/
+<!--- CHANGELOG SPLIT MARKER -->
 
-# 0.9.1
-- Updated to require conductor/application-orchestration:~0.9.3 instead of dev-master
+# Changelog
+All notable changes to this project will be documented in this file.
 
-# 0.9.0
-- Tagged for initial consistency with other modules
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-# 0.2.0 (Unreleased)
-- Renamed to Conductor
-- Updated PHP version requirement to 7.1
-- Updated config to work with ConductorAppOrchestration
-
-# 0.1.1
-- Added zf config-provider Composer setting
-
-# 0.1.0
-- Initial build copied over from Conductor
+## [1.0.0] - 2021-01-21
+### Added
+- Added support for the Magento 1 platform
