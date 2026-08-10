@@ -4,9 +4,10 @@ namespace ConductorMagento1PlatformSupport\Maintenance;
 
 use ConductorAppOrchestration\Config\ApplicationConfig;
 use ConductorAppOrchestration\Maintenance\MaintenanceStrategyInterface;
-use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
-use League\Flysystem\Sftp\SftpAdapter;
+use League\Flysystem\Local\LocalFilesystemAdapter;
+use League\Flysystem\PhpseclibV3\SftpAdapter;
+use League\Flysystem\PhpseclibV3\SftpConnectionProvider;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 
@@ -137,15 +138,18 @@ class AppMaintenanceStrategy implements MaintenanceStrategyInterface, LoggerAwar
         }
 
         if (in_array($server['host'], ['127.0.0.1', 'localhost'])) {
-            $adapter = new Local($this->applicationConfig->getCodePath());
+            $adapter = new LocalFilesystemAdapter($this->applicationConfig->getCodePath());
         } else {
-            $adapter = new SftpAdapter(
-                array_merge(
-                    $this->applicationConfig->getSshDefaults(),
-                    $server,
-                    ['root' => $this->applicationConfig->getCodePath()]
-                )
+            $config = array_merge($this->applicationConfig->getSshDefaults(), $server);
+            $connectionProvider = new SftpConnectionProvider(
+                $config['host'],
+                $config['username'] ?? '',
+                $config['password'] ?? null,
+                $config['privateKey'] ?? null,
+                $config['passphrase'] ?? null,
+                $config['port'] ?? 22
             );
+            $adapter = new SftpAdapter($connectionProvider, $this->applicationConfig->getCodePath());
         }
         return new Filesystem($adapter);
     }

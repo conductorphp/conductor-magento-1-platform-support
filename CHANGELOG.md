@@ -1,3 +1,18 @@
+[4.1.0](https://github.com/conductorphp/conductor-magento-1-platform-support/compare/4.0.0...4.1.0) (2026-08-10)
+
+### Features
+* PHP 8.4.1+ (CTAP-1224) ([e1ae14d](https://github.com/conductorphp/conductor-magento-1-platform-support/commit/e1ae14d343b02409a1233974cebf525a3433fcda))
+* laminas-servicemanager v4 (CTAP-1221) ([cd3a687](https://github.com/conductorphp/conductor-magento-1-platform-support/commit/cd3a687311855b547f7fedc1ee8ff6b823440512))
+
+<!--- CHANGELOG SPLIT MARKER -->
+
+[3.0.0](https://github.com/conductorphp/conductor-magento-1-platform-support/compare/2.0.0...3.0.0) (2026-06-26)
+
+### Bug Fixes
+* to flysystem 3 and conductor 2.0 (CTAP-776) ([4a3bcf1](https://github.com/conductorphp/conductor-magento-1-platform-support/commit/4a3bcf1f547e031d842f82878da47118eecdb304))
+
+<!--- CHANGELOG SPLIT MARKER -->
+
 [1.0.1](https://github.com/conductorphp/conductor-magento-1-platform-support/compare/1.0.0...1.0.1) (2026-06-25)
 
 ### Bug Fixes
