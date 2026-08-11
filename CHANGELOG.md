@@ -1,3 +1,10 @@
+[4.1.1](https://github.com/conductorphp/conductor-magento-1-platform-support/compare/4.1.0...4.1.1) (2026-08-11)
+
+### Bug Fixes
+* to phpunit 13 (CTAP-1226) ([52aa0c7](https://github.com/conductorphp/conductor-magento-1-platform-support/commit/52aa0c7b24c1723346545e480b6cd96b4697741a))
+
+<!--- CHANGELOG SPLIT MARKER -->
+
 [4.1.0](https://github.com/conductorphp/conductor-magento-1-platform-support/compare/4.0.0...4.1.0) (2026-08-10)
 
 ### Features
