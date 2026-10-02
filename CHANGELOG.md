@@ -1,3 +1,10 @@
+[5.1.0](https://github.com/conductorphp/conductor-magento-1-platform-support/compare/5.0.0...5.1.0) (2026-10-02)
+
+### Features
+* media @core into cache, compiled, scratch and import groups (CTAP-2146) ([f1ab6be](https://github.com/conductorphp/conductor-magento-1-platform-support/commit/f1ab6be1344a950d98a90a2fa22a9cc44fe131e5))
+
+<!--- CHANGELOG SPLIT MARKER -->
+
 [5.0.0](https://github.com/conductorphp/conductor-magento-1-platform-support/compare/4.1.1...5.0.0) (2026-09-08)
 
 

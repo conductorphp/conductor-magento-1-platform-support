@@ -392,17 +392,35 @@ return [
             'database_port'   => 3306
         ],
         'asset_groups'          => [
+            // Everything below except "import" is regenerable, so a media backup excludes
+            // @cache, @compiled and @scratch rather than @core and keeps /import
             'core'           => [
-                '/captcha',
+                '@cache',
+                '@compiled',
+                '@scratch',
+                '@import',
+            ],
+            // Resized images and placeholders, rebuilt on request
+            'cache'          => [
                 '/catalog/category/cache',
                 '/catalog/product/cache',
+                '/catalog/placeholder/cache',
+            ],
+            // Merged CSS/JS, rebuilt on request
+            'compiled'       => [
                 '/css',
                 '/css_secure',
-                '/import',
                 '/js',
                 '/js_secure',
-                '/catalog/placeholder/cache',
-                '/tmp'
+            ],
+            // Short-lived files: CAPTCHA images and uploads in progress
+            'scratch'        => [
+                '/captcha',
+                '/tmp',
+            ],
+            // Import files; data, not regenerable
+            'import'         => [
+                '/import',
             ],
             'common_modules' => [],
             'magento1_core'  => [
